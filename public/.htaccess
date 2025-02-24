@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Định nghĩa thư mục gốc nếu Project_PHP nằm trong thư mục gốc của localhost
+RewriteBase /
+
+# Nếu request không phải file hoặc thư mục thật, chuyển hướng về index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Chuyển tất cả request về index.php để xử lý
+RewriteRule ^ index.php [L,QSA]

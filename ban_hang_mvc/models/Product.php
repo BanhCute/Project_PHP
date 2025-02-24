@@ -1,17 +1,21 @@
 <?php
-include_once "./config/database.php";
+require_once __DIR__ . '/../../config/database.php';
 
 class Product
 {
-    public static function getAll()
+    private $conn;
+
+    public function __construct()
     {
-        global $conn;
+        $database = new Database();
+        $this->conn = $database->getConnection();
+    }
+
+    public function getAll()
+    {
         $sql = "SELECT * FROM products";
-        $stmt = sqlsrv_query($conn, $sql);
-        $products = [];
-        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-            $products[] = $row;
-        }
-        return $products;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
