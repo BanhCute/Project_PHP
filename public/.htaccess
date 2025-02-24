@@ -1,11 +1,11 @@
 RewriteEngine On
 
-# Định nghĩa thư mục gốc nếu Project_PHP nằm trong thư mục gốc của localhost
-RewriteBase /
-
-# Nếu request không phải file hoặc thư mục thật, chuyển hướng về index.php
+# Nếu request không trỏ đến file hoặc thư mục thực tế, thì chuyển hướng đến index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
 
-# Chuyển tất cả request về index.php để xử lý
-RewriteRule ^ index.php [L,QSA]
+# Cho phép CORS để API có thể truy cập từ frontend
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header set Access-Control-Allow-Headers "Content-Type, Authorization"
